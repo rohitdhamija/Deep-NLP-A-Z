@@ -153,8 +153,8 @@ for length in range(1, 25 + 1):
 def model_inputs():
     inputs = tf.placeholder(tf.int32, [None, None], name = 'input')
     targets = tf.placeholder(tf.int32, [None, None], name = 'target')
-    lr = tf.placeholder(tf.flat32, name = 'learning_rate')    
-    keep_prob = tf.placeholder(tf.flat32, name = 'keep_prob') 
+    lr = tf.placeholder(tf.float32, name = 'learning_rate')    
+    keep_prob = tf.placeholder(tf.float32, name = 'keep_prob') 
     return inputs, targets, lr, keep_prob
 
 # preprocessing the targets. decoder will accept certain format. batches, RNN
@@ -307,6 +307,30 @@ def seq2seq_model(inputs, targets, keep_prob, batch_size, sequence_length, answe
                                                           questionswords2int,
                                                           keep_prob,
                                                           batch_size)
+    return  training_predictions, test_predictions
+
+############# PART-3 Training the SEQ2SEQ MODEL########3
+    
+# Setting the Hyperparameters
+
+epochs = 100
+batch_size = 64
+rnn_size = 512
+num_layers = 3
+encoding_embedding_size = 512
+decoding_embedding_size = 512 
+learning_rate = 0.01
+learning_rate_decay = 0.9
+min_learning_rate = 0.0001
+keep_probability = 0.5
+
+# Defining a session
+tf.reset_default_graph()
+session = tf.InteractiveSession()
+
+# Loading the model inputs
+inputs, targets, lr, keep_prob = model_inputs()
+
     
 
 
