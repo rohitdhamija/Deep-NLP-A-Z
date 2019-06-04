@@ -209,15 +209,7 @@ def decode_training_set(encoder_state, decoder_cell,
 
     
 # Decoding the test/validation test
-def decode_test_set(encoder_state, decoder_cell, 
-                        decoder_embeddings_matrix, 
-                        sos_id,
-                        eos_id,
-                        maximum_length,
-                        num_words,
-                        sequence_length, 
-                        decoding_scope, output_function, keep_prob,
-                        batch_size):
+def decode_test_set(encoder_state, decoder_cell, decoder_embeddings_matrix, sos_id, eos_id, maximum_length, num_words, decoding_scope, output_function, keep_prob, batch_size):
     attention_states = tf.zeros([batch_size, 1, decoder_cell.output_size])    
     attention_keys, attention_values, attention_score_function, attention_construct_function = tf.contrib.seq2seq.prepare_attention(attention_states, attention_option = 'bahdanau',
                                          num_units = decoder_cell.output_size)
@@ -241,7 +233,7 @@ def decode_test_set(encoder_state, decoder_cell,
     return test_predictions
                                                                                                         
 # Creating the decoder RNN
-def decoder_rnn(decoder_embedded_input, decoder_embeddeings_matrix, encoder_state, num_words, sequence_length, rnn_size, num_layers, word2int, keep_prob, batch_size):
+def decoder_rnn(decoder_embedded_input, decoder_embeddings_matrix, encoder_state, num_words, sequence_length, rnn_size, num_layers, word2int, keep_prob, batch_size):
     with tf.variable_scope("decoding") as decoding_scope:
         lstm = tf.contrib.rnn.BasicLSTMCell(rnn_size)
         lstm_dropout = tf.contrib.rnn.DropoutWrapper(lstm, input_keep_prob = keep_prob)    
